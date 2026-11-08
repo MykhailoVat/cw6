@@ -1,0 +1,255 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="8kcMZ_P-gsrUDsNsmP22">
+    <mxGraphModel dx="2077" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&#xa;  &quot;data&quot;: &quot;stateDiagram-v2\n    [*] --&gt; Зупинка\n\n    Зупинка --&gt; Очікування : Пуск [Робот готовий] / Запустити таймер очікування\n    \n    Очікування --&gt; Пошук_коробки : Коробка досягла місця призначення / Запустити таймер пошуку коробки\n    Очікування --&gt; Аварія : Таймер сплинув [Коробка не досягла місця призначення] / Зупинити робота\n    \n    Пошук_коробки --&gt; Підняття_коробки : Робот досяг місця призначення [Коробка знаходиться під гріпером] / Запустити таймер підняття до коробки\n    Пошук_коробки --&gt; Аварія : Таймер пошуку коробки сплинув [Робот не досяг коробки]\n    \n    Підняття_коробки --&gt; Перенос_коробки : Підняття завершено [Коробку піднято] / Увімкнути таймер перенесення коробки\n    Підняття_коробки --&gt; Аварія : Таймер підняття коробки сплинув [Коробку не піднято] / Зупинити робота\n    Підняття_коробки --&gt; Аварія : Підняття завершено [Коробку не піднято] / Зупинити робота\n    \n    Перенос_коробки --&gt; Відпускання_коробки : Робот досяг місця призначення [Коробка не втрачена]\n    Перенос_коробки --&gt; Аварія : Робот досяг місця призначення [Коробка втрачена] / Зупинити робота\n    Перенос_коробки --&gt; Аварія : Таймер переносу коробки сплинув [Робот не досяг місця призначення] / Зупинити робота\n    \n    Відпускання_коробки --&gt; Очікування : Гріпер вимкнено [Гріпер не тримає коробку] / Запустити таймер очікування\n    Відпускання_коробки --&gt; Аварія : Гріпер вимкнено [Гріпер тримає коробку] / Зупинити робота\n    \n    Аварія --&gt; Зупинка : Скидання&quot;,&#xa;  &quot;config&quot;: null,&#xa;  &quot;version&quot;: &quot;12&quot;&#xa;}" id="iubLbthpmFEJ3B-eQOcl-1">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=10;" vertex="1">
+            <mxGeometry as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="n:root_start" mermaidBaseStyle="ellipse;html=1;fillColor=#000000;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;strokeWidth=1;shadow=1;shadowColor=#000000;shadowOffsetX=2;shadowOffsetY=2;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="" id="iubLbthpmFEJ3B-eQOcl-2">
+          <mxCell parent="iubLbthpmFEJ3B-eQOcl-1" style="ellipse;html=1;fillColor=#000000;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;strokeWidth=1;shadow=1;shadowColor=#000000;shadowOffsetX=2;shadowOffsetY=2;shadowBlur=0;shadowOpacity=6;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="14" width="14" x="2221" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Зупинка" mermaidId="n:Зупинка" mermaidBaseStyle="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Зупинка" id="iubLbthpmFEJ3B-eQOcl-3">
+          <mxCell parent="iubLbthpmFEJ3B-eQOcl-1" style="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="37" width="136" x="2160" y="84" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Очікування" mermaidId="n:Очікування" mermaidBaseStyle="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Очікування" id="iubLbthpmFEJ3B-eQOcl-4">
+          <mxCell parent="iubLbthpmFEJ3B-eQOcl-1" style="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="37" width="136" x="1843" y="222" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Пошук_коробки" mermaidId="n:Пошук_коробки" mermaidBaseStyle="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Пошук_коробки" id="iubLbthpmFEJ3B-eQOcl-5">
+          <mxCell parent="iubLbthpmFEJ3B-eQOcl-1" style="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="37" width="136" x="1843" y="361" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Аварія" mermaidId="n:Аварія" mermaidBaseStyle="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Аварія" id="iubLbthpmFEJ3B-eQOcl-6">
+          <mxCell parent="iubLbthpmFEJ3B-eQOcl-1" style="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="37" width="136" x="1716" y="974" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Підняття_коробки" mermaidId="n:Підняття_коробки" mermaidBaseStyle="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Підняття_коробки" id="iubLbthpmFEJ3B-eQOcl-7">
+          <mxCell parent="iubLbthpmFEJ3B-eQOcl-1" style="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;labelWidth=120;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="37" width="160" x="1440" y="499" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Перенос_коробки" mermaidId="n:Перенос_коробки" mermaidBaseStyle="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Перенос_коробки" id="iubLbthpmFEJ3B-eQOcl-8">
+          <mxCell parent="iubLbthpmFEJ3B-eQOcl-1" style="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;labelWidth=120;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="37" width="136" x="475" y="637" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Відпускання_коробки" mermaidId="n:Відпускання_коробки" mermaidBaseStyle="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Відпускання_коробки" id="iubLbthpmFEJ3B-eQOcl-9">
+          <mxCell parent="iubLbthpmFEJ3B-eQOcl-1" style="rounded=1;absoluteArcSize=1;arcSize=10;html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffffff;strokeColor=#28253D;fontColor=#28253D;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;labelWidth=120;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="37" width="190" x="30" y="775" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:root_start-&gt;Зупинка#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="" id="iubLbthpmFEJ3B-eQOcl-10">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" target="iubLbthpmFEJ3B-eQOcl-3">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Пуск [Робот готовий] / Запустити таймер очікування" mermaidId="e:Зупинка-&gt;Очікування#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.36;exitY=1;entryX=0.5;entryY=0.01;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Пуск [Робот готовий] / Запустити таймер очікування" id="iubLbthpmFEJ3B-eQOcl-11">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.36;exitY=1;entryX=0.5;entryY=0.01;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-4">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="2209" y="141" />
+                <mxPoint x="1911" y="141" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Коробка досягла місця призначення / Запустити таймер пошуку коробки" mermaidId="e:Очікування-&gt;Пошук_коробки#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Коробка досягла місця призначення / Запустити таймер пошуку коробки" id="iubLbthpmFEJ3B-eQOcl-12">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-5">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Таймер сплинув [Коробка не досягла місця призначення] / Зупинити робота" mermaidId="e:Очікування-&gt;Аварія#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.71;exitY=1;entryX=0.74;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Таймер сплинув [Коробка не досягла місця призначення] / Зупинити робота" id="iubLbthpmFEJ3B-eQOcl-13">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.71;exitY=1;entryX=0.74;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1940" y="280" />
+                <mxPoint x="2607" y="280" />
+                <mxPoint x="2607" y="310" />
+                <mxPoint x="2607" y="379" />
+                <mxPoint x="2607" y="448" />
+                <mxPoint x="2607" y="517" />
+                <mxPoint x="2607" y="656" />
+                <mxPoint x="2607" y="725" />
+                <mxPoint x="2607" y="794" />
+                <mxPoint x="2607" y="863" />
+                <mxPoint x="2607" y="934" />
+                <mxPoint x="1817" y="934" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Робот досяг місця призначення [Коробка знаходиться під гріпером] / Запустити таймер підняття до коробки" mermaidId="e:Пошук_коробки-&gt;Підняття_коробки#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.36;exitY=0.99;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Робот досяг місця призначення [Коробка знаходиться під гріпером] / Запустити таймер підняття до коробки" id="iubLbthpmFEJ3B-eQOcl-14">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.36;exitY=0.99;entryX=0.456;entryY=-0.027;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;entryDx=0;entryDy=0;entryPerimeter=0;" target="iubLbthpmFEJ3B-eQOcl-7">
+            <mxGeometry relative="1" x="-0.0138" as="geometry">
+              <Array as="points">
+                <mxPoint x="1891.6" y="430" />
+                <mxPoint x="1513" y="430" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Таймер пошуку коробки сплинув [Робот не досяг коробки]" mermaidId="e:Пошук_коробки-&gt;Аварія#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.64;exitY=0.99;entryX=0.64;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Таймер пошуку коробки сплинув [Робот не досяг коробки]" id="iubLbthpmFEJ3B-eQOcl-15">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.64;exitY=0.99;entryX=0.64;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1930" y="418" />
+                <mxPoint x="2299" y="418" />
+                <mxPoint x="2299" y="448" />
+                <mxPoint x="2299" y="517" />
+                <mxPoint x="2299" y="587" />
+                <mxPoint x="2299" y="725" />
+                <mxPoint x="2299" y="794" />
+                <mxPoint x="2299" y="863" />
+                <mxPoint x="2299" y="914" />
+                <mxPoint x="1804" y="914" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Підняття завершено [Коробку піднято] / Увімкнути таймер перенесення коробки" mermaidId="e:Підняття_коробки-&gt;Перенос_коробки#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.28;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Підняття завершено [Коробку піднято] / Увімкнути таймер перенесення коробки" id="iubLbthpmFEJ3B-eQOcl-16">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.28;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-8">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1494" y="556" />
+                <mxPoint x="543" y="556" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Таймер підняття коробки сплинув [Коробку не піднято] / Зупинити робота" mermaidId="e:Підняття_коробки-&gt;Аварія#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.46;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Таймер підняття коробки сплинув [Коробку не піднято] / Зупинити робота" id="iubLbthpmFEJ3B-eQOcl-17">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.46;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1523" y="587" />
+                <mxPoint x="1523" y="656" />
+                <mxPoint x="1523" y="794" />
+                <mxPoint x="1523" y="863" />
+                <mxPoint x="1523" y="894" />
+                <mxPoint x="1778" y="894" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Підняття завершено [Коробку не піднято] / Зупинити робота" mermaidId="e:Підняття_коробки-&gt;Аварія#1" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.71;exitY=1;entryX=0.55;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Підняття завершено [Коробку не піднято] / Зупинити робота" id="iubLbthpmFEJ3B-eQOcl-18">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.71;exitY=1;entryX=0.55;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1552" y="556" />
+                <mxPoint x="2051" y="556" />
+                <mxPoint x="2051" y="587" />
+                <mxPoint x="2051" y="656" />
+                <mxPoint x="2051" y="794" />
+                <mxPoint x="2051" y="863" />
+                <mxPoint x="2051" y="894" />
+                <mxPoint x="1791" y="894" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Робот досяг місця призначення [Коробка не втрачена]" mermaidId="e:Перенос_коробки-&gt;Відпускання_коробки#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.29;exitY=1;entryX=0.65;entryY=0.01;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Робот досяг місця призначення [Коробка не втрачена]" id="iubLbthpmFEJ3B-eQOcl-19">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.29;exitY=1;entryX=0.579;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;entryDx=0;entryDy=0;entryPerimeter=0;" target="iubLbthpmFEJ3B-eQOcl-9">
+            <mxGeometry relative="1" x="0.0327" as="geometry">
+              <Array as="points">
+                <mxPoint x="514.4" y="694" />
+                <mxPoint x="255" y="694" />
+                <mxPoint x="255" y="755" />
+                <mxPoint x="139" y="755" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Робот досяг місця призначення [Коробка втрачена] / Зупинити робота" mermaidId="e:Перенос_коробки-&gt;Аварія#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.27;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Робот досяг місця призначення [Коробка втрачена] / Зупинити робота" id="iubLbthpmFEJ3B-eQOcl-20">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.27;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="543" y="725" />
+                <mxPoint x="543" y="863" />
+                <mxPoint x="543" y="934" />
+                <mxPoint x="1752" y="934" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Таймер переносу коробки сплинув [Робот не досяг місця призначення] / Зупинити робота" mermaidId="e:Перенос_коробки-&gt;Аварія#1" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.71;exitY=1;entryX=0.36;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Таймер переносу коробки сплинув [Робот не досяг місця призначення] / Зупинити робота" id="iubLbthpmFEJ3B-eQOcl-21">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.71;exitY=1;entryX=0.36;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="572" y="694" />
+                <mxPoint x="1165" y="694" />
+                <mxPoint x="1165" y="725" />
+                <mxPoint x="1165" y="863" />
+                <mxPoint x="1165" y="914" />
+                <mxPoint x="1765" y="914" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Гріпер вимкнено [Гріпер не тримає коробку] / Запустити таймер очікування" mermaidId="e:Відпускання_коробки-&gt;Очікування#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.36;exitY=0.01;entryX=0.29;entryY=1;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Гріпер вимкнено [Гріпер не тримає коробку] / Запустити таймер очікування" id="iubLbthpmFEJ3B-eQOcl-22">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.36;exitY=0.01;entryX=0.29;entryY=1;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-4">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="100" y="755" />
+                <mxPoint x="30" y="755" />
+                <mxPoint x="30" y="725" />
+                <mxPoint x="30" y="656" />
+                <mxPoint x="30" y="587" />
+                <mxPoint x="30" y="448" />
+                <mxPoint x="30" y="379" />
+                <mxPoint x="30" y="310" />
+                <mxPoint x="30" y="280" />
+                <mxPoint x="1882" y="280" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Гріпер вимкнено [Гріпер тримає коробку] / Зупинити робота" mermaidId="e:Відпускання_коробки-&gt;Аварія#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.17;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Гріпер вимкнено [Гріпер тримає коробку] / Зупинити робота" id="iubLbthpmFEJ3B-eQOcl-23">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.17;entryY=0;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="119" y="954" />
+                <mxPoint x="1739" y="954" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Скидання" mermaidId="e:Аварія-&gt;Зупинка#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.83;exitY=0;entryX=0.64;entryY=1;strokeWidth=2;targetPerimeterSpacing=3.5;" mermaidBaseValue="Скидання" id="iubLbthpmFEJ3B-eQOcl-24">
+          <mxCell edge="1" parent="iubLbthpmFEJ3B-eQOcl-1" source="iubLbthpmFEJ3B-eQOcl-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=classic;endSize=5;fillColor=none;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.83;exitY=0;entryX=0.64;entryY=1;strokeWidth=2;targetPerimeterSpacing=3.5;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="iubLbthpmFEJ3B-eQOcl-3">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1829" y="954" />
+                <mxPoint x="2914" y="954" />
+                <mxPoint x="2914" y="863" />
+                <mxPoint x="2914" y="794" />
+                <mxPoint x="2914" y="725" />
+                <mxPoint x="2914" y="656" />
+                <mxPoint x="2914" y="587" />
+                <mxPoint x="2914" y="448" />
+                <mxPoint x="2914" y="379" />
+                <mxPoint x="2914" y="310" />
+                <mxPoint x="2914" y="241" />
+                <mxPoint x="2914" y="172" />
+                <mxPoint x="2914" y="141" />
+                <mxPoint x="2247" y="141" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
