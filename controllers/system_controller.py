@@ -21,6 +21,7 @@ class SystemController:
     ERROR = 2
 
     def __init__(self, sim, sim_ik):
+        self.box_detected = False
         self.sim = sim
 
         self.box = sim.getObject('/Box1')
@@ -36,18 +37,21 @@ class SystemController:
         self.conveyor.start()
 
     def update(self):
-        box_on_table = self.is_box_on_table()
+        if self.is_box_on_table():
+            self.box_detected = True
+            print(f"Simulation time: {self.sim.getSimulationTime():.3f} s")
 
-        if box_on_table:
+        if self.box_detected:
             self.conveyor.stop()
         else:
             self.conveyor.start()
 
         if self.state == self.WAITING:
-            if box_on_table:
+            if self.box_detected and self.robot.start_task():
                 self.state = self.PROCESSING
 
         elif self.state == self.PROCESSING:
+            self.box_detected = False
             if self.robot.state == self.robot.WAITING:
                 self.state = self.WAITING
 

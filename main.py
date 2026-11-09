@@ -1,5 +1,3 @@
-from typing import clear_overloads
-
 import threading
 
 from coppeliasim_zmqremoteapi_client import RemoteAPIClient
