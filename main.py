@@ -1,9 +1,10 @@
 import threading
+
 from coppeliasim_zmqremoteapi_client import RemoteAPIClient
 
-from controllers.conveyor import Conveyor
-from controllers.robot import Robot
+from controllers.system_controller import SystemController
 from opt.error import RobotError
+
 
 def wait_for_reset():
     print("[main.py]: Press CTRL + C to reset and start robot.")
@@ -14,16 +15,14 @@ def wait_for_reset():
     except KeyboardInterrupt:
         print("[main.py]: Reset signal received.")
 
+
 def main():
     client = RemoteAPIClient()
     sim = client.require('sim')
     sim_ik = client.require('simIK')
 
-    robot = Robot(sim, sim_ik)
-    robot.start()
-
-    conveyor = Conveyor(sim)
-    conveyor.start()
+    system = SystemController(sim, sim_ik)
+    system.start()
 
     client.setStepping(False)
     sim.startSimulation()
@@ -31,14 +30,11 @@ def main():
     try:
         while True:
             try:
-                robot.update()
-                conveyor.update()
-                #client.step()
+                system.update()
 
-            except RobotError as e:
+            except RobotError:
                 wait_for_reset()
-                robot.reset()
-                robot.start()
+                system.reset()
 
     except KeyboardInterrupt:
         print('\n[main.py]: Stopping simulation...')
@@ -52,11 +48,11 @@ def main():
             cleanup_sim = cleanup_client.require('sim')
             cleanup_ik = cleanup_client.require('simIK')
 
-            robot.cleanup(cleanup_sim, cleanup_ik)
-            print('[main.py]: Robot cleanup completed.')
+            system.cleanup(cleanup_sim, cleanup_ik)
+            print('[main.py]: System cleanup completed.')
 
         except Exception as e:
-            print(f'[main.py]: Robot cleanup error: {e}')
+            print(f'[main.py]: System cleanup error: {e}')
 
         finally:
             if cleanup_client:
@@ -77,6 +73,7 @@ def main():
                 stop_client.socket.close()
 
         client.socket.close()
+
 
 if __name__ == '__main__':
     main()

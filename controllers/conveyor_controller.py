@@ -1,5 +1,5 @@
 
-class Conveyor:
+class ConveyorController:
     def __init__(
         self,
         sim,
