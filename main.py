@@ -1,3 +1,5 @@
+from typing import clear_overloads
+
 import threading
 
 from coppeliasim_zmqremoteapi_client import RemoteAPIClient
@@ -31,6 +33,7 @@ def main():
         while True:
             try:
                 system.update()
+                #client.step()
 
             except RobotError:
                 wait_for_reset()

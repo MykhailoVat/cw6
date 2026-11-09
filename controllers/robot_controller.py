@@ -16,17 +16,17 @@ class RobotController:
     DROPPING = 6
     ERROR = 7
 
-    def __init__(self, sim, sim_ik):
+    def __init__(self, sim, sim_ik, box, table):
         self.sim = sim
         self.sim_ik = sim_ik
 
         # Scene objects
+        self.box = box
+        self.table = table
+
         self.base = sim.getObject('/IRB140')
         self.target = sim.getObject('/IRB140/target')
         self.gripper = sim.getObject('/IRB140/suctionPad')
-
-        self.box = sim.getObject('/Box1')
-        self.table = sim.getObject('/highTable')
 
         # Suction cup
         self.suction = SuctionCup(sim)
@@ -81,7 +81,6 @@ class RobotController:
         EventLogger.set_state(self._state_name(self.state))
 
         # Timeouts
-        self.wait_timeout = 30
         self.search_timeout = 10
         self.grab_timeout = 10
         self.lift_timeout = 10
@@ -109,7 +108,7 @@ class RobotController:
         )
 
     def start(self):
-        """Start robot operation."""
+        """Initialize robot operation."""
 
         EventLogger.log(
             EventCategory.COMMAND,
@@ -132,9 +131,32 @@ class RobotController:
 
         self._set_state(
             self.WAITING,
-            self.wait_timeout,
             reason='Start command'
         )
+
+    def start_task(self) -> bool:
+        """Start a new box processing task."""
+
+        if self.state != self.WAITING:
+            return False
+
+        if not self.is_robot_ready():
+            return False
+
+        self.aim_box()
+
+        self._set_state(
+            self.SEARCHING,
+            self.search_timeout,
+            reason='Task started by system controller'
+        )
+
+        EventLogger.log(
+            EventCategory.COMMAND,
+            'Box processing task received'
+        )
+
+        return True
 
     def reset(self):
         """Reset robot after an error."""
@@ -169,33 +191,17 @@ class RobotController:
 
         t = self.sim.getSimulationTime()
 
-        if self.state in (self.STOPPED, self.ERROR):
+        if self.state in (
+            self.STOPPED,
+            self.WAITING,
+            self.ERROR
+        ):
             return
 
-        # WAITING
-        if self.state == self.WAITING:
-
-            if self.is_box_on_table():
-                self.aim_box()
-
-                self._set_state(
-                    self.SEARCHING,
-                    self.search_timeout,
-                    reason='Box arrived and stopped on the table'
-                )
-
-                EventLogger.log(
-                    EventCategory.NORMAL,
-                    'Box detected at destination, searching'
-                )
-
-            elif self._timer_expired(t):
-                self._handle_error('Box did not arrive')
-
         # SEARCHING
-        elif self.state == self.SEARCHING:
+        if self.state == self.SEARCHING:
 
-            if self.validate_pos() and self.is_box_on_table():
+            if self.validate_pos():
                 self.grab_box()
 
                 self._set_state(
@@ -299,13 +305,12 @@ class RobotController:
 
                 self._set_state(
                     self.WAITING,
-                    self.wait_timeout,
                     reason='Box released successfully'
                 )
 
                 EventLogger.log(
                     EventCategory.NORMAL,
-                    'Waiting for next box'
+                    'Waiting for next task'
                 )
 
     def _set_state(self, state, timeout=None, reason=''):
@@ -395,28 +400,6 @@ class RobotController:
                 self.suction.loop_dummy_1
             ) == self.box
         )
-
-    def is_box_on_table(self):
-        """Check box contact with floor and its velocity."""
-
-        result, _ = self.sim.checkCollision(
-            self.box,
-            self.table
-        )
-
-        if not result:
-            return False
-
-        velocity, _ = self.sim.getObjectVelocity(
-            self.box
-        )
-
-        speed = sum(
-            v ** 2 for v in velocity
-        ) ** 0.5
-
-        return speed < self.velocity_tolerance
-
 
     def _handle_ik(self):
         """Execute primary IK, fallback to secondary IK."""
@@ -533,6 +516,7 @@ class RobotController:
             EventCategory.SYSTEM,
             'Robot controller cleanup completed'
         )
+
 
 class SuctionCup:
     def __init__(self, sim):
