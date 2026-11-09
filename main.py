@@ -1,8 +1,9 @@
 import threading
 from coppeliasim_zmqremoteapi_client import RemoteAPIClient
 
-from robot import Robot
-from error import RobotError
+from controllers.conveyor import Conveyor
+from controllers.robot import Robot
+from opt.error import RobotError
 
 def wait_for_reset():
     print("[main.py]: Press CTRL + C to reset and start robot.")
@@ -21,6 +22,9 @@ def main():
     robot = Robot(sim, sim_ik)
     robot.start()
 
+    conveyor = Conveyor(sim)
+    conveyor.start()
+
     client.setStepping(False)
     sim.startSimulation()
 
@@ -28,6 +32,7 @@ def main():
         while True:
             try:
                 robot.update()
+                conveyor.update()
                 #client.step()
 
             except RobotError as e:

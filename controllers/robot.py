@@ -1,9 +1,9 @@
 
 import random
 
-from event_logger import EventCategory, EventLogger
-from suction_cup import SuctionCup
-from error import RobotError
+from opt.event_logger import EventCategory, EventLogger
+from controllers.suction_cup import SuctionCup
+from opt.error import RobotError
 
 
 class Robot:
