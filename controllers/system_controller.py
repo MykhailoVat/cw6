@@ -37,23 +37,33 @@ class SystemController:
         self.conveyor.start()
 
     def update(self):
-        if self.is_box_on_table():
-            self.box_detected = True
-            print(f"Simulation time: {self.sim.getSimulationTime():.3f} s")
+        if self.state == self.WAITING:
+            if self.is_box_on_table():
+                self.box_detected = True
+
+                if self.robot.start_task():
+                    self.state = self.PROCESSING
+
+        elif self.state == self.PROCESSING:
+            if (
+                    self.box_detected
+                    and not self.is_box_on_table()
+                    and self.robot.state in (
+                    self.robot.LIFTING,
+                    self.robot.TRANSFERRING,
+                    self.robot.DROPPING,
+                    self.robot.WAITING,
+            )
+            ):
+                self.box_detected = False
+
+            if self.robot.state == self.robot.WAITING:
+                self.state = self.WAITING
 
         if self.box_detected:
             self.conveyor.stop()
         else:
             self.conveyor.start()
-
-        if self.state == self.WAITING:
-            if self.box_detected and self.robot.start_task():
-                self.state = self.PROCESSING
-
-        elif self.state == self.PROCESSING:
-            self.box_detected = False
-            if self.robot.state == self.robot.WAITING:
-                self.state = self.WAITING
 
         self.robot.update()
         self.conveyor.update()

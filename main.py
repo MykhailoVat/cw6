@@ -24,14 +24,14 @@ def main():
     system = SystemController(sim, sim_ik)
     system.start()
 
-    client.setStepping(False)
+    client.setStepping(True)
     sim.startSimulation()
 
     try:
         while True:
             try:
                 system.update()
-                #client.step()
+                client.step()
 
             except RobotError:
                 wait_for_reset()
