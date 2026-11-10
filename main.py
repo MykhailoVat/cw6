@@ -1,17 +1,15 @@
-import threading
-
 from coppeliasim_zmqremoteapi_client import RemoteAPIClient
 
 from controllers.system_controller import SystemController
 from opt.error import RobotError, SystemControlError
 
 
-def wait_for_reset():
+def wait_for_reset(client):
     print("[main.py]: Press CTRL + C to reset and start robot.")
 
     try:
         while True:
-            threading.Event().wait()
+            client.step()
     except KeyboardInterrupt:
         print("[main.py]: Reset signal received.")
 
@@ -34,7 +32,7 @@ def main():
                 client.step()
 
             except (RobotError, SystemControlError):
-                wait_for_reset()
+                wait_for_reset(client)
                 system.reset()
 
     except KeyboardInterrupt:
