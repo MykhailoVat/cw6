@@ -29,28 +29,24 @@ class SystemController:
                 self.box_detected = True
 
                 if self.robot.start_task():
+                    self.conveyor.stop()
                     self.state = self.PROCESSING
 
         elif self.state == self.PROCESSING:
             if (
                     self.box_detected
-                    and not self.is_box_on_table()
                     and self.robot.state in (
                     self.robot.LIFTING,
                     self.robot.TRANSFERRING,
                     self.robot.DROPPING,
-                    self.robot.WAITING,
             )
+                    and not self.is_box_on_table()
             ):
                 self.box_detected = False
+                self.conveyor.start()
 
             if self.robot.state == self.robot.WAITING:
                 self.state = self.WAITING
-
-        if self.box_detected:
-            self.conveyor.stop()
-        else:
-            self.conveyor.start()
 
         self.robot.update()
         self.conveyor.update()
