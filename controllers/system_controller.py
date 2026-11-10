@@ -21,14 +21,15 @@ class SystemController:
         self.robot = RobotController(sim, sim_ik, self.box, self.table)
         self.conveyor = ConveyorController(sim)
 
-        self.state = self.WAITING
-        self.logger.set_state('WAITING')
+        self.state = self.STOPPED
+        self.logger.set_state('STOPPED')
         self.deadline = None
 
         self.wait_timeout = 30
         self.processing_timeout = 20
 
     def start(self):
+        self.logger.log(EventCategory.COMMAND, 'Start command received')
         self.robot.start()
         self.conveyor.start()
         self._set_state(self.WAITING, self.wait_timeout, reason='System started')
