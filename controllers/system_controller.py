@@ -1,5 +1,6 @@
 from controllers.conveyor_controller import ConveyorController
 from controllers.robot_controller import RobotController
+from opt.event_logger import EventCategory, EventLogger
 
 class SystemController:
     # states
@@ -18,19 +19,36 @@ class SystemController:
         self.conveyor = ConveyorController(sim)
 
         self.state = self.WAITING
+        self.deadline = None
+
+        self.wait_timeout = 30
+        self.processing_timeout = 20
 
     def start(self):
         self.robot.start()
         self.conveyor.start()
+        self._set_state(self.WAITING, self.wait_timeout, reason='System started')
 
     def update(self):
+        if self.state == self.ERROR:
+            return
+
+        t = self.sim.getSimulationTime()
+
         if self.state == self.WAITING:
             if self.is_box_on_table():
                 self.box_detected = True
 
                 if self.robot.start_task():
                     self.conveyor.stop()
-                    self.state = self.PROCESSING
+                    self._set_state(
+                        self.PROCESSING,
+                        self.processing_timeout,
+                        reason='Box processing task started'
+                    )
+
+            if self.state == self.WAITING and self._timer_expired(t):
+                self._handle_error('Box waiting timeout')
 
         elif self.state == self.PROCESSING:
             if (
@@ -47,7 +65,13 @@ class SystemController:
                 self.conveyor.start()
 
             if self.robot.state == self.robot.WAITING:
-                self.state = self.WAITING
+                self._set_state(
+                    self.WAITING,
+                    self.wait_timeout,
+                    reason='Box processing completed'
+                )
+            elif self._timer_expired(t):
+                self._handle_error('Box processing timeout')
 
         self.robot.update()
         self.conveyor.update()
@@ -59,7 +83,44 @@ class SystemController:
         self.box_detected = False
         self.conveyor.start()
 
-        self.state = self.WAITING
+        self._set_state(self.WAITING, self.wait_timeout, reason='System reset')
+
+    def _set_state(self, state, timeout=None, reason=''):
+        """Change state, set its timer and log the transition."""
+
+        previous_state = self.state
+        self.state = state
+        self.deadline = (
+            self.sim.getSimulationTime() + timeout
+            if timeout is not None else None
+        )
+
+        if previous_state != state:
+            states = {
+                self.WAITING: 'WAITING',
+                self.PROCESSING: 'PROCESSING',
+                self.ERROR: 'ERROR'
+            }
+            EventLogger.log(
+                EventCategory.STATE_CHANGE,
+                'System state changed',
+                previous_state=states[previous_state],
+                next_state=states[state],
+                reason=reason or 'Not specified'
+            )
+
+    def _timer_expired(self, t):
+        """Check whether current state timer expired."""
+
+        return self.deadline is not None and t >= self.deadline
+
+    def _handle_error(self, message):
+        """Stop the system and use the robot error/reset flow."""
+
+        self._set_state(self.ERROR, reason=message)
+        self.conveyor.stop()
+        self.conveyor.update()
+        self.robot._handle_error(message)
 
     def cleanup(self, sim, sim_ik):
         self.robot.cleanup(sim, sim_ik)
