@@ -145,15 +145,15 @@ class RobotController:
 
         self.aim_box()
 
+        self.logger.log(
+            EventCategory.COMMAND,
+            'Box processing task received'
+        )
+
         self._set_state(
             self.SEARCHING,
             self.search_timeout,
             reason='Task started by system controller'
-        )
-
-        self.logger.log(
-            EventCategory.COMMAND,
-            'Box processing task received'
         )
 
         return True
