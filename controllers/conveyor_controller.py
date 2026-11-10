@@ -26,6 +26,13 @@ class ConveyorController:
         self.logger.set_state('RUNNING')
         if not was_running:
             self.logger.log(EventCategory.COMMAND, 'Conveyor started')
+            self.logger.log(
+                EventCategory.STATE_CHANGE,
+                'Conveyor state changed',
+                previous_state='STOPPED',
+                next_state='RUNNING',
+                reason='Start command'
+            )
 
     def stop(self):
         was_running = self.running
@@ -33,6 +40,13 @@ class ConveyorController:
         self.logger.set_state('STOPPED')
         if was_running:
             self.logger.log(EventCategory.COMMAND, 'Conveyor stopped')
+            self.logger.log(
+                EventCategory.STATE_CHANGE,
+                'Conveyor state changed',
+                previous_state='RUNNING',
+                next_state='STOPPED',
+                reason='Stop command'
+            )
 
     def update(self):
         velocity = self.velocity if self.running else 0.0
