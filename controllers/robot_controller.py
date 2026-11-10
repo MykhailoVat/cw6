@@ -1,4 +1,3 @@
-
 import random
 
 from opt.event_logger import EventCategory, EventLogger

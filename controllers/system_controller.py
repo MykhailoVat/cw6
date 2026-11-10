@@ -2,19 +2,6 @@ from controllers.conveyor_controller import ConveyorController
 from controllers.robot_controller import RobotController
 
 class SystemController:
-    """
-    Coordinates the robotic system.
-
-    States:
-        WAITING    - Conveyor running, waiting for a box.
-        PROCESSING - Box detected, conveyor stopped.
-
-    Responsibilities:
-        - Initialize and manage device controllers.
-        - Coordinate robot and conveyor operation.
-        - Handle system state transitions.
-        - Manage startup, reset and cleanup.
-    """
     # states
     WAITING = 0
     PROCESSING = 1
