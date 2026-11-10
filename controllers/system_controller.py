@@ -30,6 +30,13 @@ class SystemController:
 
     def start(self):
         self.logger.log(EventCategory.COMMAND, 'Start command received')
+        if self.state != self.STOPPED:
+            self.logger.log(
+                EventCategory.COMMAND,
+                'Start command ignored: system is not stopped'
+            )
+            return
+
         self.robot.start()
         self.conveyor.start()
         self._set_state(self.WAITING, self.wait_timeout, reason='System started')
