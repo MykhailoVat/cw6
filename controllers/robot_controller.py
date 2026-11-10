@@ -16,6 +16,7 @@ class RobotController:
     ERROR = 7
 
     def __init__(self, sim, sim_ik, box, table):
+        self.logger = EventLogger('RobotController')
         self.sim = sim
         self.sim_ik = sim_ik
 
@@ -77,7 +78,7 @@ class RobotController:
         self.state = self.STOPPED
         self.deadline = None
 
-        EventLogger.set_state(self._state_name(self.state))
+        self.logger.set_state(self._state_name(self.state))
 
         # Timeouts
         self.search_timeout = 10
@@ -101,7 +102,7 @@ class RobotController:
             [0.7, -0.3, self.hover_height]
         ]
 
-        EventLogger.log(
+        self.logger.log(
             EventCategory.SYSTEM,
             'Robot controller initialized'
         )
@@ -109,20 +110,20 @@ class RobotController:
     def start(self):
         """Initialize robot operation."""
 
-        EventLogger.log(
+        self.logger.log(
             EventCategory.COMMAND,
             'Start command received'
         )
 
         if self.state != self.STOPPED:
-            EventLogger.log(
+            self.logger.log(
                 EventCategory.COMMAND,
                 'Start command ignored: robot is not stopped'
             )
             return
 
         if not self.is_robot_ready():
-            EventLogger.log(
+            self.logger.log(
                 EventCategory.ERROR,
                 'Robot is not ready; start command rejected'
             )
@@ -150,7 +151,7 @@ class RobotController:
             reason='Task started by system controller'
         )
 
-        EventLogger.log(
+        self.logger.log(
             EventCategory.COMMAND,
             'Box processing task received'
         )
@@ -160,13 +161,13 @@ class RobotController:
     def reset(self, force=False):
         """Reset after a robot error or when forced by the system."""
 
-        EventLogger.log(
+        self.logger.log(
             EventCategory.COMMAND,
             'Reset command received'
         )
 
         if self.state != self.ERROR and not force:
-            EventLogger.log(
+            self.logger.log(
                 EventCategory.COMMAND,
                 'Reset command ignored: robot is not in ERROR state'
             )
@@ -209,7 +210,7 @@ class RobotController:
                     reason='Robot aimed at box, grabbing state activated'
                 )
 
-                EventLogger.log(
+                self.logger.log(
                     EventCategory.NORMAL,
                     'Attempting to grab box'
                 )
@@ -223,7 +224,7 @@ class RobotController:
             if self.is_holding():
                 self.lift_box()
 
-                EventLogger.log(
+                self.logger.log(
                     EventCategory.NORMAL,
                     'Box successfully grabbed'
                 )
@@ -234,7 +235,7 @@ class RobotController:
                     reason='Box successfully grabbed'
                 )
 
-                EventLogger.log(
+                self.logger.log(
                     EventCategory.NORMAL,
                     'Lifting box'
                 )
@@ -251,7 +252,7 @@ class RobotController:
             elif self.validate_pos():
                 self.retrieve_box()
 
-                EventLogger.log(
+                self.logger.log(
                     EventCategory.NORMAL,
                     'Box lifted successfully'
                 )
@@ -262,7 +263,7 @@ class RobotController:
                     reason='Box lifted successfully'
                 )
 
-                EventLogger.log(
+                self.logger.log(
                     EventCategory.NORMAL,
                     'Transferring box to destination'
                 )
@@ -279,7 +280,7 @@ class RobotController:
             elif self.validate_pos():
                 self.drop_box()
 
-                EventLogger.log(
+                self.logger.log(
                     EventCategory.NORMAL,
                     'Destination reached; releasing box'
                 )
@@ -297,7 +298,7 @@ class RobotController:
 
             if not self.is_holding():
 
-                EventLogger.log(
+                self.logger.log(
                     EventCategory.NORMAL,
                     'Box successfully dropped'
                 )
@@ -307,7 +308,7 @@ class RobotController:
                     reason='Box released successfully'
                 )
 
-                EventLogger.log(
+                self.logger.log(
                     EventCategory.NORMAL,
                     'Waiting for next task'
                 )
@@ -329,9 +330,9 @@ class RobotController:
             previous_name = self._state_name(previous_state)
             next_name = self._state_name(state)
 
-            EventLogger.set_state(next_name)
+            self.logger.set_state(next_name)
 
-            EventLogger.log(
+            self.logger.log(
                 EventCategory.STATE_CHANGE,
                 'Robot state changed',
                 previous_state=previous_name,
@@ -366,7 +367,7 @@ class RobotController:
     def _handle_error(self, message):
         """Stop robot operation and enter error state."""
 
-        EventLogger.log(
+        self.logger.log(
             EventCategory.ERROR,
             message
         )
@@ -503,7 +504,7 @@ class RobotController:
     def cleanup(self, sim, sim_ik):
         """Release resources."""
 
-        EventLogger.log(
+        self.logger.log(
             EventCategory.SYSTEM,
             'Robot controller cleanup started'
         )
@@ -511,7 +512,7 @@ class RobotController:
         self.suction.cleanup(sim)
         sim_ik.eraseEnvironment(self.ik_env)
 
-        EventLogger.log(
+        self.logger.log(
             EventCategory.SYSTEM,
             'Robot controller cleanup completed'
         )

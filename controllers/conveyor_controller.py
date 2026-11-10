@@ -1,3 +1,4 @@
+from opt.event_logger import EventCategory, EventLogger
 
 class ConveyorController:
     def __init__(
@@ -5,6 +6,7 @@ class ConveyorController:
         sim,
         velocity: float = 0.1
     ):
+        self.logger = EventLogger('ConveyorController')
         self.sim = sim
         conveyor_paths = [
             "/conveyor1",
@@ -16,12 +18,21 @@ class ConveyorController:
 
         self.velocity = velocity
         self.running = True
+        self.logger.set_state('RUNNING')
 
     def start(self):
+        was_running = self.running
         self.running = True
+        self.logger.set_state('RUNNING')
+        if not was_running:
+            self.logger.log(EventCategory.COMMAND, 'Conveyor started')
 
     def stop(self):
+        was_running = self.running
         self.running = False
+        self.logger.set_state('STOPPED')
+        if was_running:
+            self.logger.log(EventCategory.COMMAND, 'Conveyor stopped')
 
     def update(self):
         velocity = self.velocity if self.running else 0.0

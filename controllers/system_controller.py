@@ -11,6 +11,7 @@ class SystemController:
     ERROR = 3
 
     def __init__(self, sim, sim_ik):
+        self.logger = EventLogger('SystemController')
         self.box_detected = False
         self.sim = sim
 
@@ -21,6 +22,7 @@ class SystemController:
         self.conveyor = ConveyorController(sim)
 
         self.state = self.WAITING
+        self.logger.set_state('WAITING')
         self.deadline = None
 
         self.wait_timeout = 30
@@ -34,11 +36,6 @@ class SystemController:
     def update(self):
         if self.state in (self.ERROR, self.STOPPED):
             return
-
-        # if self.robot.state == self.robot.ERROR:
-        #     message = 'Robot is in ERROR state'
-        #     self._stop_for_robot_error(message)
-        #     raise RobotError(message)
 
         t = self.sim.getSimulationTime()
 
@@ -114,7 +111,8 @@ class SystemController:
                 self.STOPPED: 'STOPPED',
                 self.ERROR: 'ERROR'
             }
-            EventLogger.log(
+            self.logger.set_state(states[state])
+            self.logger.log(
                 EventCategory.STATE_CHANGE,
                 'System state changed',
                 previous_state=states[previous_state],
@@ -130,7 +128,7 @@ class SystemController:
     def _handle_error(self, message):
         """Stop the system and raise its own error."""
 
-        EventLogger.log(EventCategory.ERROR, message)
+        self.logger.log(EventCategory.ERROR, message)
         self._set_state(self.ERROR, reason=message)
         self.conveyor.stop()
         self.conveyor.update()

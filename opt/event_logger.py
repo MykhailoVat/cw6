@@ -13,32 +13,34 @@ class EventCategory(Enum):
 
 class EventLogger:
     _message_number = 0
-    _current_state = 'UNKNOWN'
 
-    @classmethod
-    def set_state(cls, state):
-        """Update current robot state."""
-        cls._current_state = state
+    def __init__(self, controller_name: str):
+        self.controller_name = controller_name
+        self._current_state = 'UNKNOWN'
 
-    @classmethod
+    def set_state(self, state):
+        """Update this controller's current state."""
+        self._current_state = state
+
     def log(
-        cls,
+        self,
         category: EventCategory,
         description: str,
         previous_state=None,
         next_state=None,
         reason=None
     ):
-        cls._message_number += 1
+        EventLogger._message_number += 1
 
         timestamp = datetime.now().strftime(
             "%Y-%m-%d %H:%M:%S.%f"
         )[:-3]
 
         message = (
-            f"[{cls._message_number:04d}] "
+            f"[{EventLogger._message_number:04d}] "
             f"[{timestamp}] "
-            f"[{cls._current_state}] "
+            f"[{self.controller_name}] "
+            f"[{self._current_state}] "
             f"{category.value}: "
             f"{description}"
         )
