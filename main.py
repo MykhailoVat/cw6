@@ -3,7 +3,7 @@ import threading
 from coppeliasim_zmqremoteapi_client import RemoteAPIClient
 
 from controllers.system_controller import SystemController
-from opt.error import RobotError
+from opt.error import RobotError, SystemControlError
 
 
 def wait_for_reset():

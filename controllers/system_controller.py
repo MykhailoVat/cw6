@@ -1,5 +1,6 @@
 from controllers.conveyor_controller import ConveyorController
 from controllers.robot_controller import RobotController
+from opt.error import SystemControlError
 from opt.event_logger import EventCategory, EventLogger
 
 class SystemController:
@@ -120,6 +121,7 @@ class SystemController:
         self._set_state(self.ERROR, reason=message)
         self.conveyor.stop()
         self.conveyor.update()
+
         self.robot._handle_error(message)
 
     def cleanup(self, sim, sim_ik):
