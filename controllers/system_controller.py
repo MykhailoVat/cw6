@@ -78,7 +78,7 @@ class SystemController:
         self.conveyor.update()
 
     def reset(self):
-        self.robot.reset()
+        self.robot.reset(force=self.state == self.ERROR)
         self.robot.start()
 
         self.box_detected = False
@@ -116,13 +116,14 @@ class SystemController:
         return self.deadline is not None and t >= self.deadline
 
     def _handle_error(self, message):
-        """Stop the system and use the robot error/reset flow."""
+        """Stop the system and raise its own error."""
 
+        EventLogger.log(EventCategory.ERROR, message)
         self._set_state(self.ERROR, reason=message)
         self.conveyor.stop()
         self.conveyor.update()
 
-        self.robot._handle_error(message)
+        raise SystemControlError(message)
 
     def cleanup(self, sim, sim_ik):
         self.robot.cleanup(sim, sim_ik)

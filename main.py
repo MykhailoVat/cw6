@@ -33,7 +33,7 @@ def main():
                 system.update()
                 client.step()
 
-            except RobotError:
+            except (RobotError, SystemControlError):
                 wait_for_reset()
                 system.reset()
 

@@ -157,15 +157,15 @@ class RobotController:
 
         return True
 
-    def reset(self):
-        """Reset robot after an error."""
+    def reset(self, force=False):
+        """Reset after a robot error or when forced by the system."""
 
         EventLogger.log(
             EventCategory.COMMAND,
             'Reset command received'
         )
 
-        if self.state != self.ERROR:
+        if self.state != self.ERROR and not force:
             EventLogger.log(
                 EventCategory.COMMAND,
                 'Reset command ignored: robot is not in ERROR state'
