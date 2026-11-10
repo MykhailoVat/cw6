@@ -1,3 +1,5 @@
+import signal
+
 from coppeliasim_zmqremoteapi_client import RemoteAPIClient
 
 from controllers.system_controller import SystemController
@@ -7,11 +9,21 @@ from opt.error import RobotError, SystemControlError
 def wait_for_reset(client):
     print("[main.py]: Press CTRL + C to reset and start robot.")
 
+    reset_requested = False
+
+    def request_reset(signum, frame):
+        nonlocal reset_requested
+        reset_requested = True
+
+    previous_handler = signal.signal(signal.SIGINT, request_reset)
     try:
-        while True:
+        while not reset_requested:
+            # Finish the request/reply exchange before starting reset.
             client.step()
-    except KeyboardInterrupt:
-        print("[main.py]: Reset signal received.")
+    finally:
+        signal.signal(signal.SIGINT, previous_handler)
+
+    print("[main.py]: Reset signal received.")
 
 
 def main():
