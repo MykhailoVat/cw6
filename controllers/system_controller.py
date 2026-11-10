@@ -1,13 +1,14 @@
 from controllers.conveyor_controller import ConveyorController
 from controllers.robot_controller import RobotController
-from opt.error import SystemControlError
+from opt.error import RobotError, SystemControlError
 from opt.event_logger import EventCategory, EventLogger
 
 class SystemController:
     # states
     WAITING = 0
     PROCESSING = 1
-    ERROR = 2
+    STOPPED = 2
+    ERROR = 3
 
     def __init__(self, sim, sim_ik):
         self.box_detected = False
@@ -31,8 +32,13 @@ class SystemController:
         self._set_state(self.WAITING, self.wait_timeout, reason='System started')
 
     def update(self):
-        if self.state == self.ERROR:
+        if self.state in (self.ERROR, self.STOPPED):
             return
+
+        # if self.robot.state == self.robot.ERROR:
+        #     message = 'Robot is in ERROR state'
+        #     self._stop_for_robot_error(message)
+        #     raise RobotError(message)
 
         t = self.sim.getSimulationTime()
 
@@ -74,11 +80,16 @@ class SystemController:
             elif self._timer_expired(t):
                 self._handle_error('Box processing timeout')
 
-        self.robot.update()
+        try:
+            self.robot.update()
+        except RobotError as e:
+            self._stop_for_robot_error(str(e))
+            raise
+
         self.conveyor.update()
 
     def reset(self):
-        self.robot.reset(force=self.state == self.ERROR)
+        self.robot.reset(force=self.state in (self.ERROR, self.STOPPED))
         self.robot.start()
 
         self.box_detected = False
@@ -100,6 +111,7 @@ class SystemController:
             states = {
                 self.WAITING: 'WAITING',
                 self.PROCESSING: 'PROCESSING',
+                self.STOPPED: 'STOPPED',
                 self.ERROR: 'ERROR'
             }
             EventLogger.log(
@@ -124,6 +136,13 @@ class SystemController:
         self.conveyor.update()
 
         raise SystemControlError(message)
+
+    def _stop_for_robot_error(self, message):
+        """Stop the system while preserving the robot's own error."""
+
+        self._set_state(self.STOPPED, reason=message)
+        self.conveyor.stop()
+        self.conveyor.update()
 
     def cleanup(self, sim, sim_ik):
         self.robot.cleanup(sim, sim_ik)
