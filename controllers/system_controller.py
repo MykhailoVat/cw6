@@ -37,6 +37,7 @@ class SystemController:
                     self.box_detected
                     and self.robot.state in (
                     self.robot.LIFTING,
+                    self.robot.GRABBING,
                     self.robot.TRANSFERRING,
                     self.robot.DROPPING,
             )
