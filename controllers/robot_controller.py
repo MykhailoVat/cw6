@@ -140,9 +140,6 @@ class RobotController:
         if self.state != self.WAITING:
             return False
 
-        if not self.is_robot_ready():
-            return False
-
         self.aim_box()
 
         self.logger.log(
