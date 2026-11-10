@@ -59,7 +59,9 @@ class SystemController:
         self.robot.reset()
         self.robot.start()
 
+        self.box_detected = False
         self.conveyor.start()
+
         self.state = self.WAITING
 
     def cleanup(self, sim, sim_ik):
