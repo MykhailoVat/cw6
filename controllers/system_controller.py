@@ -92,12 +92,12 @@ class SystemController:
         self.conveyor.update()
 
     def reset(self):
+        self.logger.log(EventCategory.COMMAND, 'Reset command received')
         self.robot.reset(force=self.state in (self.ERROR, self.STOPPED))
-        self.robot.start()
+        self.conveyor.stop()
+        self.conveyor.update()
 
-        self.conveyor.start()
-
-        self._set_state(self.WAITING, self.wait_timeout, reason='System reset')
+        self._set_state(self.STOPPED, reason='System reset')
 
     def _set_state(self, state, timeout=None, reason=''):
         """Change state, set its timer and log the transition."""

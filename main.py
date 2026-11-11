@@ -46,6 +46,7 @@ def main():
             except (RobotError, SystemControlError):
                 wait_for_reset(client)
                 system.reset()
+                system.start()
 
     except KeyboardInterrupt:
         print('\n[main.py]: Stopping simulation...')
