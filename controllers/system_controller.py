@@ -69,6 +69,7 @@ class SystemController:
             )
                     and not self.is_box_on_table()
             ):
+                # resistant if already running
                 self.conveyor.start()
 
             if self.robot.state == self.robot.WAITING:
