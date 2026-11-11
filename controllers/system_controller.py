@@ -89,7 +89,7 @@ class SystemController:
         try:
             self.robot.update()
         except RobotError as e:
-            self._error_for_robot_error(str(e))
+            self._handle_error(str(e))
             raise
 
         self.conveyor.update()
@@ -143,13 +143,6 @@ class SystemController:
         self.conveyor.update()
 
         raise SystemControlError(message)
-
-    def _error_for_robot_error(self, message):
-        """Stop the system while preserving the robot's own error."""
-
-        self._set_state(self.ERROR, reason=message)
-        self.conveyor.stop()
-        self.conveyor.update()
 
     def cleanup(self, sim, sim_ik):
         self.robot.cleanup(sim, sim_ik)
