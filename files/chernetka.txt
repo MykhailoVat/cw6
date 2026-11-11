@@ -54,3 +54,30 @@
 │ suctionPad, Box1, highTable  │  │ conveyor2                  │
 └──────────────────────────────┘  └────────────────────────────┘
 
+4. Порядок запуску компонентів і налаштування з’єднань
+1) Відкрити сцену CoppeliaSim із запущеним ZMQ Remote API server та
+   потрібними об’єктами: /IRB140, /Box1, /highTable, /conveyor1,
+   /conveyor2 і suctionPad з його датчиком та dummy-об’єктами.
+2) Запустити main.py. RemoteAPIClient під’єднується до localhost:23000;
+   адреса й порт клієнта мають відповідати налаштуванням сервера.
+3) main.py отримує інтерфейси sim і simIK, створює SystemController
+   (той створює RobotController і ConveyorController), викликає start(),
+   вмикає покроковий режим і запускає симуляцію.
+4) У циклі main.py виконує SystemController.update(), потім client.step().
+   Після reset система лишається в STOPPED і для відновлення потребує
+   окремої команди start().
+
+5. Інтерфейси обміну
+• main.py ↔ CoppeliaSim: ZeroMQ Remote API через RemoteAPIClient;
+  запити до sim керують симуляцією та об’єктами, simIK виконує IK.
+• SystemController ↔ дочірні контролери: виклики start(), start_task(),
+  update(), stop() і reset(); стани та результати перевірок передаються
+  через атрибути Python-об’єктів.
+• Контролери ↔ сцена: об’єкти отримуються за шляхами CoppeliaSim;
+  зіткнення Box1 із highTable перевіряється через sim.checkCollision,
+  а захоплення — за батьківським об’єктом suction cup dummy.
+• ConveyorController передає швидкість обох конвеєрів у
+  customData.__ctrl__ через sim.packTable і sim.setBufferProperty:
+  velocity при роботі, 0 при зупинці.
+• Кожен контролер записує свої події через окремий EventLogger;
+  логування призначене для діагностики й не є каналом керування.
