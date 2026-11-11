@@ -12,7 +12,6 @@ class SystemController:
 
     def __init__(self, sim, sim_ik):
         self.logger = EventLogger('SystemController')
-        self.box_detected = False
         self.sim = sim
 
         self.box = sim.getObject('/Box1')
@@ -49,8 +48,6 @@ class SystemController:
 
         if self.state == self.WAITING:
             if self.is_box_on_table():
-                self.box_detected = True
-
                 if self.robot.start_task():
                     self.conveyor.stop()
                     self._set_state(
@@ -64,8 +61,7 @@ class SystemController:
 
         elif self.state == self.PROCESSING:
             if (
-                    self.box_detected
-                    and self.robot.state in (
+                    self.robot.state in (
                     self.robot.LIFTING,
                     self.robot.GRABBING,
                     self.robot.TRANSFERRING,
@@ -73,17 +69,16 @@ class SystemController:
             )
                     and not self.is_box_on_table()
             ):
-                self.box_detected = False
                 self.conveyor.start()
 
             if self.robot.state == self.robot.WAITING:
-                self.box_detected = False
 
                 self._set_state(
                     self.WAITING,
                     self.wait_timeout,
                     reason='Box processing completed'
                 )
+
             elif self._timer_expired(t):
                 self._handle_error('Box processing timeout')
 
@@ -99,7 +94,6 @@ class SystemController:
         self.robot.reset(force=self.state in (self.ERROR, self.STOPPED))
         self.robot.start()
 
-        self.box_detected = False
         self.conveyor.start()
 
         self._set_state(self.WAITING, self.wait_timeout, reason='System reset')
