@@ -77,6 +77,8 @@ class SystemController:
                 self.conveyor.start()
 
             if self.robot.state == self.robot.WAITING:
+                self.box_detected = False
+
                 self._set_state(
                     self.WAITING,
                     self.wait_timeout,
@@ -88,7 +90,7 @@ class SystemController:
         try:
             self.robot.update()
         except RobotError as e:
-            self._stop_for_robot_error(str(e))
+            self._error_for_robot_error(str(e))
             raise
 
         self.conveyor.update()
@@ -143,10 +145,10 @@ class SystemController:
 
         raise SystemControlError(message)
 
-    def _stop_for_robot_error(self, message):
+    def _error_for_robot_error(self, message):
         """Stop the system while preserving the robot's own error."""
 
-        self._set_state(self.STOPPED, reason=message)
+        self._set_state(self.ERROR, reason=message)
         self.conveyor.stop()
         self.conveyor.update()
 
