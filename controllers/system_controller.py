@@ -66,7 +66,6 @@ class SystemController:
             if (
                     self.robot.state in (
                     self.robot.LIFTING,
-                    self.robot.GRABBING,
                     self.robot.TRANSFERRING,
                     self.robot.DROPPING,
             )
