@@ -37,6 +37,9 @@ class SystemController:
             return
 
         self.robot.start()
+        if self.robot.state != self.robot.WAITING:
+            self._handle_error('Robot failed to start')
+
         self.conveyor.start()
         self._set_state(self.WAITING, self.wait_timeout, reason='System started')
 
@@ -135,6 +138,7 @@ class SystemController:
 
         self.logger.log(EventCategory.ERROR, message)
         self._set_state(self.ERROR, reason=message)
+        self.robot.stop()
         self.conveyor.stop()
         self.conveyor.update()
 

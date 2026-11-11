@@ -155,6 +155,21 @@ class RobotController:
 
         return True
 
+    def stop(self):
+        """Stop active robot control while preserving its current grip."""
+
+        if self.state in (self.STOPPED, self.ERROR):
+            return
+
+        self.logger.log(
+            EventCategory.COMMAND,
+            'Stop command received'
+        )
+        self._set_state(
+            self.STOPPED,
+            reason='Stop command'
+        )
+
     def reset(self, force=False):
         """Reset after a robot error or when forced by the system."""
 
